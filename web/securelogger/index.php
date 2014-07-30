@@ -21,7 +21,10 @@
 <?php
 if (isset($_GET['page']))
 {
-	include $_GET['page'];
+  if ($_GET['page'] != 'index.php')
+  {
+	  include $_GET['page'];
+  }
 }
 else
 {
