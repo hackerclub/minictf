@@ -3,5 +3,4 @@ Author: mike_pizza
 
 Catch all hacking attempts with SecureLogger!
 
-Goal:
-  Get code execution on the server.
+Must be a writeable directory named 'tmp' in the document root.

@@ -1,17 +1,17 @@
 <head>
-	<title> SECURE LOGGER -- DEMO </title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	<style>
-		#lock
-		{
-			width: 5%;
-			height: 7%;
-			float: right;
-			margin-top: -50px;
-		}
-	</style>
+  <title> SECURE LOGGER -- DEMO </title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <style>
+    #lock
+    {
+      width: 5%;
+      height: 7%;
+      float: right;
+      margin-top: -50px;
+    }
+  </style>
 </head>
 <html>
 <h1> Welcome to SECURE LOGGER </h1> <img id="lock" src="lock.png">
@@ -19,19 +19,28 @@
 
 <hr>
 <?php
-if (isset($_GET['page']))
+
+session_start();
+
+if (!isset($_SESSION['file']))
 {
-  if ($_GET['page'] != 'index.php')
-  {
-	  include $_GET['page'];
-  }
+  $filename =  tempnam("tmp", "log");
+  $_SESSION['file'] = str_replace($_SERVER['DOCUMENT_ROOT'] . '/', '', $filename);
+
+}
+
+$PAGES = array($_SESSION['file']);
+
+if (isset($_GET['page']) && in_array($_GET['page'], $PAGES))
+{
+  require_once $_GET['page'];
 }
 else
 {
-	include "login-logger.php";
-		
-	echo '<br>';
-	echo '<a class="btn btn-success" href="?page=login.log">View Logs</a>';
+  include "login-logger.php";
+    
+  echo '<br>';
+  echo '<a class="btn btn-success" href="?page=' . $_SESSION['file'] . '">View Logs</a>';
 }
 ?>
 <hr>
@@ -43,3 +52,4 @@ else
 </div>
 <a href="/">Secure LOGGER Home</a> 
 </body>
+
