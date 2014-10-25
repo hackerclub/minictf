@@ -13,7 +13,7 @@ def home():
 
 @app.route('/resetrequest', methods=['GET', 'POST'])
 def resetrequest():
-  form = ResetPasswordRequestForm()
+  form = ResetPasswordRequestForm(csrf_enabled=False)
 
   if request.method == 'POST':
     if form.username.data != 'admin':
@@ -34,7 +34,7 @@ def resetrequest():
 
 @app.route('/resetconfirm', methods=['GET', 'POST'])
 def resetconfirm():
-  form = ResetPasswordConfirmForm()
+  form = ResetPasswordConfirmForm(csrf_enabled=False)
 
   if request.method == 'POST':
     if not form.validate():
